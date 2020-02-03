@@ -1,5 +1,6 @@
 file_name = 'game_stat.txt'
 year = 2014
+name_of_game = 0
 
 def rows_spliten_by_enter(file_name):
     lines = read_file(file_name)
@@ -19,15 +20,45 @@ def decide(file_name, year):
     boolen_value = False
     rows = rows_spliten_by_enter(file_name)
     for row in rows:
-        #print(row.split('\t'))
+        # print(row.split('\t'))
         if str(year) in row.split('\t'):
             boolen_value = True
-    print(boolen_value)
+    # print(boolen_value)
     return boolen_value
 
 
+def is_longer(temp_year, last_year_production_game):
+    if temp_year > last_year_production_game:
+        last_year_production_game = temp_year
+    return last_year_production_game
+
+
+def checking_name_lates_game(last_year_production_game, rows, name_of_game):
+    last_game_list = []
+    for row in rows:
+        list_row = row.split('\t')
+        if str(last_year_production_game) in list_row:
+            last_game_list.append(list_row[name_of_game])
+    first_row = 0
+    print(last_game_list[first_row])
+    return last_game_list[first_row]
+
+
 def get_latest(file_name):
-    pass
+    last_year_production_game = 0
+    rows = rows_spliten_by_enter(file_name)
+    for row in rows:
+        # print('huj')
+        for col in row.split('\t'):
+            # if string have length 4 letters
+            if len(col) == 4:
+                try:
+                    temp_year = int(col)
+                except:
+                    pass
+                last_year_production_game = is_longer(temp_year, last_year_production_game)
+    last_game = checking_name_lates_game(last_year_production_game, rows, name_of_game)
+    return last_game
 
 
 def count_by_genre(file_name, genre):
@@ -51,7 +82,7 @@ def read_file(file_name):
 def main():
     count_games(file_name)
     decide(file_name, year)
-
+    get_latest(file_name)
 
 
 if __name__ == "__main__":
