@@ -19,11 +19,11 @@ def decide(file_name, year):
     boolen_value = False
     rows = rows_spliten_by_enter(file_name)
     for row in rows:
-        print(row.split('\t'))
+        #print(row.split('\t'))
         if str(year) in row.split('\t'):
             boolen_value = True
     print(boolen_value)
-    #return boolen_value
+    return boolen_value
 
 
 def get_latest(file_name):
