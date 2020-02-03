@@ -1,6 +1,8 @@
 file_name = 'game_stat.txt'
 year = 2014
 name_of_game = 0
+genre = "First-person shooter"
+title = "Counter-Strike"
 
 def rows_spliten_by_enter(file_name):
     lines = read_file(file_name)
@@ -23,7 +25,6 @@ def decide(file_name, year):
         # print(row.split('\t'))
         if str(year) in row.split('\t'):
             boolen_value = True
-    # print(boolen_value)
     return boolen_value
 
 
@@ -40,7 +41,7 @@ def checking_name_lates_game(last_year_production_game, rows, name_of_game):
         if str(last_year_production_game) in list_row:
             last_game_list.append(list_row[name_of_game])
     first_row = 0
-    print(last_game_list[first_row])
+    # print(last_game_list[first_row])
     return last_game_list[first_row]
 
 
@@ -62,12 +63,25 @@ def get_latest(file_name):
 
 
 def count_by_genre(file_name, genre):
-    pass
+    count_genre = 0
+    rows = rows_spliten_by_enter(file_name)
+    for row in rows:
+        if genre in row.split('\t'):
+            count_genre += 1
+    print(count_genre)
+    return count_genre
+
 
 
 def get_line_number_by_title(file_name, title):
-    pass
-
+    count_rows = 0
+    rows = rows_spliten_by_enter(file_name)
+    for row in rows:
+        count_rows += 1
+        if title in row.split('\t'):
+            this_row = count_rows
+    #print(this_row)
+    return this_row
 
 
 def read_file(file_name):
@@ -80,9 +94,12 @@ def read_file(file_name):
 
 
 def main():
+    # czy tego nie usunąć?
     count_games(file_name)
     decide(file_name, year)
     get_latest(file_name)
+    count_by_genre(file_name, genre)
+    get_line_number_by_title(file_name, title)
 
 
 if __name__ == "__main__":
