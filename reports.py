@@ -1,5 +1,6 @@
 NAME_GAME_INDEX = 0
 INDEX_VALUE_NUMBER_PLAYER = 1
+INDEX_GAME_REVIEW = 2
 
 def rows_spliten_by_enter(file_name):
     lines = read_file(file_name)
@@ -65,7 +66,6 @@ def count_by_genre(file_name, genre):
     return count_genre
 
 
-
 def get_line_number_by_title(file_name, title):
     count_rows = 0
     rows = rows_spliten_by_enter(file_name)
@@ -104,8 +104,10 @@ def sort_abc(file_name):
 def get_genres(file_name):
     pass
 
+
 def when_was_top_sold_fps(file_name):
     pass
+
 
 def max_value_players_def(file_name):
     max_value_players = 0
@@ -133,8 +135,8 @@ def get_most_played(file_name):
                 break
         except:
             pass
-
     return game_max_players
+
 
 def list_number_sold_games(file_name):
     list_sold = []
@@ -151,8 +153,8 @@ def list_number_sold_games(file_name):
 
 def sum_sold(file_name):
     list_sold = list_number_sold_games(file_name)
-    sum_sold = sum(list_sold)
-    return sum_sold
+    sum_sold_values = sum(list_sold)
+    return sum_sold_values
 
 
 def get_selling_avg(file_name):
@@ -168,10 +170,10 @@ def list_game_name(file_name):
         row_spliten = row.split("\t")
         try:
             list_game_title.append(row_spliten[NAME_GAME_INDEX])
-
         except:
             pass
     return list_game_title
+
 
 def max_len_game_name(lista_game_title):
     temp_list_lenght = []
@@ -179,20 +181,47 @@ def max_len_game_name(lista_game_title):
         temp_list_lenght.append(len(game))
     return temp_list_lenght
 
+
 def count_longest_title(file_name):
     lista_game_title = list_game_name(file_name)
-    #temp_list_lenght = max_len_game_name(lista_game_title)
-    #temp_max_value = max(temp_list_lenght)
-
-
+    # temp_list_lenght = max_len_game_name(lista_game_title)
+    # temp_max_value = max(temp_list_lenght)
     longest_title = len(max(lista_game_title, key=len))
     return longest_title
 
 
+def get_list_date(file_name):
+    list_game_date_review = []
+    rows = rows_spliten_by_enter(file_name)
+    for row in rows:
+        row_spliten = row.split("\t")
+        try:
+            list_game_date_review.append(int(row_spliten[INDEX_GAME_REVIEW]))
+        except:
+            pass
+    return list_game_date_review
+
+
 def get_date_avg(file_name):
-    pass
+    list_game_date_review = get_list_date(file_name)
+    avrage_date = sum(list_game_date_review)/len(list_game_date_review)
+
+    if avrage_date != int(avrage_date):
+        avrage_date = int(avrage_date + 1)
+    else:
+        avrage_date = int(avrage_date)
+    return avrage_date
+
+
 def get_game(file_name, title):
-    pass
+    rows = rows_spliten_by_enter(file_name)
+    for row in rows:
+        row_spliten = row.split("\t")
+        if title in row_spliten:
+            break
+    return row_spliten
+
+
 
 def main():
     file_name = 'game_stat.txt'
@@ -209,6 +238,8 @@ def main():
     sum_sold(file_name)
     get_selling_avg(file_name)
     count_longest_title(file_name)
+    get_date_avg(file_name)
+    get_game(file_name, title)
 
 if __name__ == "__main__":
     main()
